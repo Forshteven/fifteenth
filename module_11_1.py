@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
-import numpy as np
 from datetime import datetime
-
+from matplotlib.ticker import MultipleLocator
 
 data = {
     'первый ярус 1 участка камеры шлюза': ('2025-04-05', '2025-07-05'),
@@ -71,14 +70,17 @@ width = 0.8
 for i, event_name in enumerate(event_names):
     ax.broken_barh([(start_dates[i], end_dates[i] - start_dates[i])],
                    (i - width / 2, width),
-                   facecolors=('tab:red'))
+                   facecolors=('tab:blue'))
 
 # Настройки графика
 ax.set_yticks(range(len(event_names)))
 ax.set_yticklabels(event_names)
 ax.set_xlim(min(start_dates), max(end_dates))
-ax.set_xlabel('Date')
-ax.set_title('Events Timeline')
+ax.set_xlabel('Даты')
+ax.set_title('График монтажа ГМО Городецкого судоходного шлюза')
+ax.xaxis.set_major_locator(MultipleLocator(30))
 
 # Показать график
+plt.xticks(rotation=90)
+plt.grid()
 plt.show()
