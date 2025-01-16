@@ -71,7 +71,7 @@ width = 0.8
 for i, event_name in enumerate(event_names):
     ax.broken_barh([(start_dates[i], end_dates[i] - start_dates[i])],
                    (i - width / 2, width),
-                   facecolors=('tab:blue', 'tab:orange', 'tab:green')[i % 3])
+                   facecolors=('tab:red'))
 
 # Настройки графика
 ax.set_yticks(range(len(event_names)))
