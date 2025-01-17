@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from datetime import datetime
-from matplotlib.ticker import MultipleLocator
+from matplotlib.ticker import MultipleLocator, FixedFormatter
 
 data = {
     'первый ярус 1 участка камеры шлюза': ('2025-04-05', '2025-07-05'),
@@ -77,10 +77,12 @@ ax.set_yticks(range(len(event_names)))
 ax.set_yticklabels(event_names)
 ax.set_xlim(min(start_dates), max(end_dates))
 ax.set_xlabel('Даты')
-ax.set_title('График монтажа ГМО Городецкого судоходного шлюза')
+ax.set_title('График монтажа ГМО Городецкого гидроузла')
 ax.xaxis.set_major_locator(MultipleLocator(30))
+ax.xaxis.set_minor_locator(MultipleLocator(10))
 
 # Показать график
 plt.xticks(rotation=90)
-plt.grid()
+plt.grid(True, which='both', color='black', linewidth=1)
+plt.grid(True, which='minor', linestyle=':', color='grey', linewidth=0.5)
 plt.show()
