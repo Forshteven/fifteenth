@@ -44,7 +44,7 @@ data = {
     'приспособление для подъёма створок в ремонтное положение': ('2026-05-10', '2026-08-10'),
     'закладные части плавучих рымов': ('2025-07-25', '2026-02-25'),
     'рым плавучий, швартовые тумбы': ('2026-02-25', '2026-03-30'),
-    'система майнообразования и льдоотгона': ('2026-11-15', '2026-12-05'),
+    'система майнообразования и льдоотгона': ('2026-07-15', '2026-08-05'),
     'реконструкция двустворчатых ворот 30,0-14,04-13,14': ('2026-03-30', '2026-05-10'),
     'монтаж накатной платформы': ('2026-06-25', '2026-09-25')
 }
@@ -57,7 +57,7 @@ event_names = []
 start_dates = []
 end_dates = []
 
-for event, dates in data.items():
+for event, dates in reversed(data.items()):
     start_date, end_date = map(parse_date, dates)
     event_names.append(event)
     start_dates.append(start_date)
@@ -67,7 +67,7 @@ fig, ax = plt.subplots()
 
 width = 0.8
 
-for i, event_name in enumerate(event_names):
+for i, events in enumerate(event_names):
     ax.broken_barh([(start_dates[i], end_dates[i] - start_dates[i])],
                    (i - width / 2, width),
                    facecolors=('tab:blue'))
@@ -75,7 +75,8 @@ for i, event_name in enumerate(event_names):
 # Настройки графика
 ax.set_yticks(range(len(event_names)))
 ax.set_yticklabels(event_names)
-ax.set_xlim(min(start_dates), max(end_dates))
+start_date = datetime(2025, 4, 1)
+ax.set_xlim(left=start_date, right=max(end_dates))
 ax.set_xlabel('Даты')
 ax.set_title('График монтажа ГМО Городецкого гидроузла')
 ax.xaxis.set_major_locator(MultipleLocator(30))
