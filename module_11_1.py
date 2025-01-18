@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from datetime import datetime
-from matplotlib.ticker import MultipleLocator, FixedFormatter
+# from matplotlib.ticker import MultipleLocator
+import matplotlib.dates as mdates
 
 data = {
     'первый ярус 1 участка камеры шлюза': ('2025-04-05', '2025-07-05'),
@@ -57,6 +58,7 @@ event_names = []
 start_dates = []
 end_dates = []
 
+
 for event, dates in reversed(data.items()):
     start_date, end_date = map(parse_date, dates)
     event_names.append(event)
@@ -65,25 +67,32 @@ for event, dates in reversed(data.items()):
 
 fig, ax = plt.subplots()
 
-width = 0.8
+width = 0.5
 
 for i, events in enumerate(event_names):
+    color = 'tab:blue' if i >= 18 else 'tab:red'
     ax.broken_barh([(start_dates[i], end_dates[i] - start_dates[i])],
                    (i - width / 2, width),
-                   facecolors=('tab:blue'))
+                   facecolors=color)
+    x_text = start_dates[i] + (end_dates[i] - start_dates[i])/2
+    y_text = i + 0.5
+    ax.text(x_text, y_text, f'{start_dates[i]} - {end_dates[i]}', ha='center', va='center', fontsize=5)
+
 
 # Настройки графика
 ax.set_yticks(range(len(event_names)))
 ax.set_yticklabels(event_names)
 start_date = datetime(2025, 4, 1)
 ax.set_xlim(left=start_date, right=max(end_dates))
-ax.set_xlabel('Даты')
 ax.set_title('График монтажа ГМО Городецкого гидроузла')
-ax.xaxis.set_major_locator(MultipleLocator(30))
-ax.xaxis.set_minor_locator(MultipleLocator(10))
-
+# ax.xaxis.set_major_locator(MultipleLocator(30))
+# ax.xaxis.set_minor_locator(MultipleLocator(10))
+ax.xaxis.set_major_locator(mdates.MonthLocator())
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
 # Показать график
-plt.xticks(rotation=90)
+plt.xticks(rotation=90, fontsize=8)
+plt.yticks( fontsize=8)
 plt.grid(True, which='both', color='black', linewidth=1)
 plt.grid(True, which='minor', linestyle=':', color='grey', linewidth=0.5)
+# plt.legend()
 plt.show()
