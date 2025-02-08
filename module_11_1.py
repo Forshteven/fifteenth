@@ -15,10 +15,10 @@ data_conc= {
     'первый ярус НГ': ('05-05-2025', '20-07-2025'),
     'второй ярус НГ': ('05-06-2025', '30-09-2025'),
     'третий ярус НГ': ('25-07-2025', '15-10-2025'),
-    'четвёртый ярус (скольз. опалубка)': ('15-10-2025', '15-12-2025'),
-    'четвёртый ярус (ячейки)': ('15-11-2025', '15-02-2026'),
-    'пятый ярус': ('03-01-2026', '10-04-2026'),
-    'шестой ярус': ('15-02-2026', '10-05-2026'),
+    'четвёртый ярус НГ (скольз. опалубка)': ('15-10-2025', '15-12-2025'),
+    'четвёртый ярус НГ (ячейки)': ('15-11-2025', '15-02-2026'),
+    'пятый ярус НГ': ('03-01-2026', '10-04-2026'),
+    'шестой ярус НГ': ('15-02-2026', '10-05-2026'),
     'первый ярус 2 участка камеры шлюза': ('05-07-2025', '20-09-2025'),
     'второй ярус 2 участка камеры шлюза': ('25-07-2025', '25-10-2025'),
     'третий ярус 2 участка камеры шлюза': ('25-08-2025', '25-10-2025'),
@@ -45,7 +45,7 @@ data_gmo = {
     'закладные уголки, колонны подушек, рамы подпятников, пятовые устройства, подушки РДВ НГ': ('15-03-2026', '30-03-2026'),
     'створки РДВ НГ': ('25-02-2026', '15-07-2026'),
     'приспособление для подъёма створок в ремонтное положение': ('10-05-2026', '10-08-2026'),
-    'закладные части плавучих рымов': ('25-07-2026', '25-02-2026'),
+    'закладные части плавучих рымов': ('25-07-2025', '25-02-2026'),
     'рым плавучий, швартовые тумбы': ('25-02-2026', '30-03-2026'),
     'система майнообразования и льдоотгона': ('15-07-2026', '05-08-2026'),
     'реконструкция двустворчатых ворот 30,0-14,04-13,14': ('30-03-2026', '10-05-2026'),
@@ -85,7 +85,7 @@ fig, ax = plt.subplots()
 width = 0.5
 
 for i, events in enumerate(event_names_gmo):
-    color = 'tab:blue' 
+    color = 'tab:red'
     ax.broken_barh([(start_dates_gmo[i], end_dates_gmo[i] - start_dates_gmo[i])],
                    (i - width / 2, width),
                    facecolors=color)
@@ -98,15 +98,15 @@ for i, events in enumerate(event_names_gmo):
                             f'{(end_dates_gmo[i] - start_dates_gmo[i]).days} {days_word}', ha='center', va='center', fontsize=5)
 
 for i, events in enumerate(event_names_conc):
-    color = 'tab:red'
+    color = 'tab:blue'
     ax.broken_barh([(start_dates_conc[i], end_dates_conc[i] - start_dates_conc[i])],
-                   (len(event_names_gmo), width),
+                   (i - width / 2 + len(event_names_gmo), width),
                    facecolors=color)
     days_word = 'день' if int((end_dates_conc[i] - start_dates_conc[i]).days) % 10 == 1 and int((end_dates_conc[i] - start_dates_conc[i]).days) != 11 \
         else ('дня' if int((end_dates_conc[i] - start_dates_conc[i]).days) % 10 in range(2, 5) and int((end_dates_conc[i] - start_dates_conc[i]).days)
         not in range(11, 16) else 'дней')
     x_text = start_dates_conc[i] + (end_dates_conc[i] - start_dates_conc[i])/2
-    y_text = i + 0.5
+    y_text = i + len(event_names_gmo) + 0.5
     ax.text(x_text, y_text, f'{start_dates_conc[i].strftime("%d-%m-%Y")} - {end_dates_conc[i].strftime("%d-%m-%Y")}, '
                             f'{(end_dates_conc[i] - start_dates_conc[i]).days} {days_word}', ha='center', va='center', fontsize=5)
 
@@ -117,9 +117,9 @@ ax.legend(fontsize=8, loc='upper right',frameon=True ,framealpha=1)
 
 # Настройки графика
 ax.set_yticks(range(len(event_names_conc + event_names_gmo)))
-ax.set_yticklabels(event_names_conc + event_names_gmo)
+ax.set_yticklabels(event_names_gmo + event_names_conc)
 start_date = datetime(2025, 4, 1)
-ax.set_xlim(left=start_date, right=max(event_names_conc + event_names_gmo))
+ax.set_xlim(left=start_date, right=max(end_dates_gmo))
 ax.set_title('График монтажа ГМО Городецкого гидроузла')
 ax.xaxis.set_major_locator(mdates.MonthLocator())
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
