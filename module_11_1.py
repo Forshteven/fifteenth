@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import matplotlib.dates as mdates
 
+
 data_conc= {
     'первый ярус 1 участка камеры шлюза': ('05-04-2025', '05-07-2025'),
     'второй ярус 1 участка камеры шлюза': ('05-05-2025', '05-08-2025'),
@@ -56,9 +57,9 @@ data_gmo = {
 def parse_date(date_str):
     return datetime.strptime(date_str, '%d-%m-%Y').date()
 
-def sort_key(e):
-    for start_date in e[1]:
-        return parse_date(start_date)
+# def sort_key(e):
+#     for start_date in e[1]:
+#         return parse_date(start_date)
 
 event_names_conc = []
 start_dates_conc = []
@@ -68,19 +69,20 @@ start_dates_gmo = []
 end_dates_gmo = []
 
 
-for event, dates in sorted(data_conc.items(), key=sort_key, reverse=True):
+for event, dates in reversed(data_conc.items()):
     start_date, end_date = map(parse_date, dates)
     event_names_conc.append(event)
     start_dates_conc.append(start_date)
     end_dates_conc.append(end_date)
 
-for event, dates in sorted(data_gmo.items(), key=sort_key, reverse=True):
+for event, dates in reversed(data_gmo.items()):
     start_date, end_date = map(parse_date, dates)
     event_names_gmo.append(event)
     start_dates_gmo.append(start_date)
     end_dates_gmo.append(end_date)
 
 fig, ax = plt.subplots()
+
 
 width = 0.5
 
@@ -125,7 +127,7 @@ ax.xaxis.set_major_locator(mdates.MonthLocator())
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
 # Показать график
 plt.xticks(rotation=90, fontsize=8)
-plt.yticks( fontsize=8)
+plt.yticks(fontsize=8)
 plt.grid(True, which='both', color='black', linewidth=1)
 plt.grid(True, which='minor', linestyle=':', color='grey', linewidth=0.5)
 plt.plot()
