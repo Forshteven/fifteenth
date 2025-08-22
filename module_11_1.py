@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 import matplotlib.dates as mdates
 
 
+
 data_conc= {
     'первый ярус фундаментной плиты камеры шлюза': ('18-12-2024', '07-06-2025'),
     'второй ярус фундаментной плиты камеры шлюза': ('15-01-2025', '09-07-2025'),
@@ -118,7 +119,7 @@ for i, events in enumerate(event_names_gmo):
     x_text = start_dates_gmo[i] + (end_dates_gmo[i] - start_dates_gmo[i])/2
     y_text = i + 0.5
     ax.text(x_text, y_text, f'{start_dates_gmo[i].strftime("%d-%m-%Y")} - {end_dates_gmo[i].strftime("%d-%m-%Y")}, '
-                            f'{(end_dates_gmo[i] - start_dates_gmo[i]).days} {days_word}', ha='center', va='center', fontsize=4)
+                            f'{(end_dates_gmo[i] - start_dates_gmo[i]).days} {days_word}', ha='center', va='center', fontsize=3)
 
 for i, events in enumerate(event_names_conc):
     color = 'tab:blue'
@@ -131,7 +132,7 @@ for i, events in enumerate(event_names_conc):
     x_text = start_dates_conc[i] + (end_dates_conc[i] - start_dates_conc[i])/2
     y_text = i + len(event_names_gmo) + 0.5
     ax.text(x_text, y_text, f'{start_dates_conc[i].strftime("%d-%m-%Y")} - {end_dates_conc[i].strftime("%d-%m-%Y")}, '
-                            f'{(end_dates_conc[i] - start_dates_conc[i]).days} {days_word}', ha='center', va='center', fontsize=4)
+                            f'{(end_dates_conc[i] - start_dates_conc[i]).days} {days_word}', ha='center', va='center', fontsize=3)
 
 # Добавляем фиктивные элементы для легенды
 ax.barh(-1, 0, height=0, color='tab:blue', label='Устройство бетонных конструкций')
@@ -147,9 +148,9 @@ ax.set_title('График монтажа ГМО Городецкого гидр
 ax.xaxis.set_major_locator(mdates.MonthLocator())
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
 # Показать график
-plt.xticks(rotation=0, fontsize=5)
+plt.xticks(rotation=0, fontsize=4)
 plt.ylim([-1, len(event_names_conc)+len(event_names_gmo)])
-plt.yticks(fontsize=5)
+plt.yticks(fontsize=4)
 plt.grid(True, which='both', color='black', linewidth=0.5)
 plt.subplots_adjust(left=0.22, right=0.98, bottom=0.05, top=0.95)
 plt.plot()
