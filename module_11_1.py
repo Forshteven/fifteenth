@@ -38,12 +38,12 @@ data_gmo = {
     'пазовые конструкции и закладные части ОВГ': ('24-02-2026', '17-05-2026'),
     'гидроприводы и затворы ОВГ': ('18-05-2026', '30-06-2026'),
     'пороги, пазовые конструкции и решётки СУР': ('01-06-2026', '30-06-2026'),
-    'пороги и монтажные рамы подпятников, пятовые устройства\n'
-    'первые яруса вертикальных облицовок и монтажных колонн ОДВ НГ': ('01-10-2025', '10-11-2025'),
+    'пороги и монтажные рамы подпятников, пятовые устройства, первые яруса вертикальных облицовок и монтажных колонн '
+    'ОДВ НГ': ('01-10-2025', '10-11-2025'),
     'второй и третий ярусы монтажных колонн ОДВ НГ': ('11-11-2025', '21-11-2025'),
     'вертикальная облицовка ОДВ НГ (2 ярус), подушки закладные (1-4 яруса)': ('22-11-2025', '22-12-2025'),
     'поддерживающие конструкции для сборки створок ОДВ НГ': ('11-11-2025', '30-11-2025'),
-    'вертикальная облицовка (3, 4 ярус) ОДВ НГ (2 ярус), \n подушки закладные (5-9 яруса)': ('23-12-2025', '23-01-2026'),
+    'вертикальная облицовка (3, 4 ярус) ОДВ НГ (2 ярус), подушки закладные (5-9 яруса)': ('23-12-2025', '23-01-2026'),
     'анкера гальсбантов ОДВ НГ': ('24-01-2026', '24-02-2026'),
     'створки ОДВ НГ': ('23-12-2025', '31-05-2026'),
     'гидроприводы и гальсбанты ОДВ НГ': ('01-06-2026', '18-06-2026'),
@@ -103,7 +103,7 @@ for event, dates in reversed(data_gmo.items()):
     start_dates_gmo.append(start_date)
     end_dates_gmo.append(end_date)
 
-fig, ax = plt.subplots(figsize=(30,20), dpi=140)
+fig, ax = plt.subplots(dpi=140)
 
 
 width = 0.5
@@ -142,8 +142,8 @@ ax.legend(fontsize=8, loc='upper right',frameon=True ,framealpha=1)
 # Настройки графика
 ax.set_yticks(range(len(event_names_conc + event_names_gmo)))
 ax.set_yticklabels(event_names_gmo + event_names_conc)
-start_date = datetime(2024, 12, 10)
-ax.set_xlim(left=start_date, right=max(end_dates_gmo))
+start_date = min(start_dates_conc) - timedelta(days=10)
+ax.set_xlim(left=start_date, right=max(end_dates_gmo) + timedelta(days=10))
 ax.set_title('График монтажа ГМО Городецкого гидроузла')
 ax.xaxis.set_major_locator(mdates.MonthLocator())
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
@@ -152,6 +152,6 @@ plt.xticks(rotation=0, fontsize=4)
 plt.ylim([-1, len(event_names_conc)+len(event_names_gmo)])
 plt.yticks(fontsize=4)
 plt.grid(True, which='both', color='black', linewidth=0.5)
-plt.subplots_adjust(left=0.22, right=0.98, bottom=0.05, top=0.95)
+plt.subplots_adjust(left=0.38, right=0.98, bottom=0.05, top=0.95)
 plt.plot()
 plt.show()
