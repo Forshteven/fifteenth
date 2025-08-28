@@ -7,11 +7,10 @@ wb.remove(wb.active)
 sheet1 = wb.create_sheet('Данные по бетону')
 sheet2 = wb.create_sheet('Данные по ГМО')
 
-
 headers_conc = list(data_conc.keys())
 for col_num, header in enumerate(headers_conc):
     sheet1.cell(row=col_num + 1, column=1).value = header
-    sheet1.column_dimensions['A'].width = 45
+    sheet1.column_dimensions['A'].width = 50
 
 start_dates_conc = []
 finish_dates_conc = []
@@ -30,7 +29,7 @@ for col_num, header in enumerate(finish_dates_conc):
 headers_gmo = list(data_gmo.keys())
 for col_num, header in enumerate(headers_gmo):
     sheet2.cell(row=col_num + 1, column=1).value = header
-    sheet2.column_dimensions['A'].width = 70
+    sheet2.column_dimensions['A'].width = 80
 
 start_dates_gmo = []
 finish_dates_gmo = []
