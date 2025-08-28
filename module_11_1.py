@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 import matplotlib.dates as mdates
 
 
-
 data_conc= {
     'первый ярус фундаментной плиты камеры шлюза': ('18-12-2024', '07-06-2025'),
     'второй ярус фундаментной плиты камеры шлюза': ('15-01-2025', '09-07-2025'),
